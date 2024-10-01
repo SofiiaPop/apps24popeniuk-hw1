@@ -1,11 +1,10 @@
 package ua.edu.ucu.apps.tempseries;
 import java.util.Arrays;
 import java.util.InputMismatchException;
-
 import lombok.Getter;
 
+@Getter
 public class TemperatureSeriesAnalysis {
-    @Getter
     private double[] temperatureSeries;
 
     public TemperatureSeriesAnalysis() {
@@ -19,6 +18,10 @@ public class TemperatureSeriesAnalysis {
             }
         }
         this.temperatureSeries = temperatureSeries.clone();
+    }
+
+    public double[] getTemperatureSeries() {
+        return temperatureSeries;
     }
 
     private void error() {

@@ -2,26 +2,25 @@ package ua.edu.ucu.tempseries;
 
 import static org.junit.Assert.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.Test;
-
+import org.junit.Before;
 import ua.edu.ucu.apps.tempseries.TempSummaryStatistics;
 import ua.edu.ucu.apps.tempseries.TemperatureSeriesAnalysis;
 
 public class TemperatureSeriesAnalysisTest {
-
     private TemperatureSeriesAnalysis seriesAnalysisEmpty;
     private TemperatureSeriesAnalysis seriesAnalysisOne;
     private TemperatureSeriesAnalysis seriesAnalysisSev;
 
-    @BeforeEach
+    @Before
     public void setUp() {
-        double[] temperatureSeriesEmpty = new double[]{};
+        double[] temperatureSeriesEmpty = new double[0];
         seriesAnalysisEmpty = new TemperatureSeriesAnalysis(temperatureSeriesEmpty);
 
         // Initialize the one-element series
         double[] temperatureSeriesOne = {-1.0};
         seriesAnalysisOne = new TemperatureSeriesAnalysis(temperatureSeriesOne);
+        System.out.println(seriesAnalysisOne.getTemperatureSeries());
 
         // Initialize the multi-element series
         double[] temperatureSeriesSev = {3.0, -5.0, 1.0, 5.0};
@@ -31,11 +30,9 @@ public class TemperatureSeriesAnalysisTest {
 
     @Test
     public void test() {
-        double[] temperatureSeries = {-1.0};
-        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
         double expResult = -1.0;
 
-        double actualResult = seriesAnalysis.average();
+        double actualResult = seriesAnalysisOne.average();
         assertEquals(expResult, actualResult, 0.00001);
     }
 
@@ -158,9 +155,11 @@ public class TemperatureSeriesAnalysisTest {
        assertEquals(expResult, actualResult, 0.00001);
    }
 
-   @Test(expected = IllegalArgumentException.class)
+   @Test
     public void testTempsLessThanWithEmptySeries() {
-        seriesAnalysisEmpty.findTempsLessThen(2);
+        double[] expResult = new double[0];
+        double[] actualResult = seriesAnalysisEmpty.findTempsLessThen(2);
+        assertArrayEquals(expResult, actualResult, 0.00001);
     }
 
     @Test
@@ -177,9 +176,11 @@ public class TemperatureSeriesAnalysisTest {
     assertArrayEquals(expResult, actualResult, 0.00001);
    }
 
-   @Test(expected = IllegalArgumentException.class)
+   @Test
     public void testTempsGreaterThanWithEmptySeries() {
-        seriesAnalysisEmpty.findTempsGreaterThen(2);
+        double[] expResult = {};
+        double[] actualResult = seriesAnalysisEmpty.findTempsGreaterThen(2);
+        assertArrayEquals(expResult, actualResult, 0.00001);
     }
 
     @Test
@@ -191,14 +192,16 @@ public class TemperatureSeriesAnalysisTest {
 
    @Test
    public void testTempsGreaterThan() {
-    double[] expResult = {-5.0, 1.0};
-    double[] actualResult = seriesAnalysisSev.findTempsGreaterThen(2);
+    double[] expResult = {3.0, 5.0};
+    double[] actualResult = seriesAnalysisSev.findTempsGreaterThen(2.0);
     assertArrayEquals(expResult, actualResult, 0.00001);
    }
 
-   @Test(expected = IllegalArgumentException.class)
+   @Test
     public void testTempsInRangeWithEmptySeries() {
-        seriesAnalysisEmpty.findTempsInRange(2.4, 6.0);
+        double[] expResult = new double[0];
+        double[] actualResult = seriesAnalysisEmpty.findTempsInRange(2.4, 6.0);
+        assertArrayEquals(expResult, actualResult, 0.00001);
     }
 
     @Test
@@ -220,7 +223,6 @@ public class TemperatureSeriesAnalysisTest {
         seriesAnalysisEmpty.reset();
         double[] expOutput = {};
         assertArrayEquals(seriesAnalysisEmpty.getTemperatureSeries(), expOutput, 0.00001);
-    
     }
 
    @Test
@@ -260,9 +262,7 @@ public class TemperatureSeriesAnalysisTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-   public void testTempSummaryStatisticsWithEmptySeries() {
-        int count = seriesAnalysisEmpty.addTemps(10.0, 20.0, 30.0);
-        assertEquals(3, count);
+    public void testTempSummaryStatisticsWithEmptySeries() {
         seriesAnalysisEmpty.summaryStatistics();
     }
 
@@ -272,13 +272,13 @@ public class TemperatureSeriesAnalysisTest {
         assertEquals(-1.0, stats.getAvgTemp(), 0.001);
         assertEquals(-1.0, stats.getMinTemp(), 0.001);
         assertEquals(-1.0, stats.getMaxTemp(), 0.001);
-        assertEquals(-1.0, stats.getDevTemp(), 0.001);
+        assertEquals(0.0, stats.getDevTemp(), 0.001);
     }
 
     @Test
     public void testTempSummaryStatistics() {
         TempSummaryStatistics stats = seriesAnalysisSev.summaryStatistics();
-        assertEquals(2.0, stats.getAvgTemp(), 0.001);
+        assertEquals(1.0, stats.getAvgTemp(), 0.001);
         assertEquals(-5.0, stats.getMinTemp(), 0.001);
         assertEquals(5.0, stats.getMaxTemp(), 0.001);
         assertEquals(3.74, stats.getDevTemp(), 0.01);
