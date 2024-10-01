@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 public class TemperatureSeriesAnalysis {
     private double[] temperatureSeries;
+    private final static double num = -273.0;
 
     public TemperatureSeriesAnalysis() {
         this.temperatureSeries = new double[0];
@@ -13,7 +14,7 @@ public class TemperatureSeriesAnalysis {
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
         for (double temp : temperatureSeries) {
-            if (temp < -273.0) {
+            if (temp < num) {
                 throw new InputMismatchException();
             }
         }
@@ -30,14 +31,15 @@ public class TemperatureSeriesAnalysis {
         }
     }
 
-    public double findTempClosest(double tempValue){
+    public double findTempClosest(double tempValue) {
         error();
-        double closest = (temperatureSeries[0] - tempValue) * (temperatureSeries[0] - tempValue);
+        double closest = (temperatureSeries[0] - tempValue) * 
+        (temperatureSeries[0] - tempValue);
         double output = temperatureSeries[0];
         double dist;
         for (double d : temperatureSeries) {
             dist = (d - tempValue) * (d - tempValue);
-            if (dist < closest){
+            if (dist < closest) {
                 closest = dist;
                 output = d;
             }
