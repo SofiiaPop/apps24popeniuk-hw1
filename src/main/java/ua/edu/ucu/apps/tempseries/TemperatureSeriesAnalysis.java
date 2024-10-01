@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 public class TemperatureSeriesAnalysis {
-    private static final double NUM = -273.0;
     private double[] temperatureSeries;
+    private static final double NUM = -273.0;
 
     public TemperatureSeriesAnalysis() {
         this.temperatureSeries = new double[0];
@@ -22,7 +22,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double[] getTemperatureSeries() {
-        return temperatureSeries;
+        return temperatureSeries.clone();
     }
 
     private void error() {
@@ -162,7 +162,7 @@ public class TemperatureSeriesAnalysis {
 
     public double[] sortTemps() {
         Arrays.sort(temperatureSeries);
-        return temperatureSeries;
+        return temperatureSeries.clone();
     }
 
     public TempSummaryStatistics summaryStatistics() {
