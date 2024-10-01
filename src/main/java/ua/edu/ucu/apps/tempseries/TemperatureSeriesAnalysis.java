@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 public class TemperatureSeriesAnalysis {
+    private final static double NUM = -273.0;
     private double[] temperatureSeries;
-    private final static double num = -273.0;
 
     public TemperatureSeriesAnalysis() {
         this.temperatureSeries = new double[0];
@@ -14,7 +14,7 @@ public class TemperatureSeriesAnalysis {
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
         for (double temp : temperatureSeries) {
-            if (temp < num) {
+            if (temp < NUM) {
                 throw new InputMismatchException();
             }
         }
@@ -33,8 +33,8 @@ public class TemperatureSeriesAnalysis {
 
     public double findTempClosest(double tempValue) {
         error();
-        double closest = (temperatureSeries[0] - tempValue) * 
-        (temperatureSeries[0] - tempValue);
+        double closest = (temperatureSeries[0] - tempValue)
+        * (temperatureSeries[0] - tempValue);
         double output = temperatureSeries[0];
         double dist;
         for (double d : temperatureSeries) {
@@ -43,7 +43,7 @@ public class TemperatureSeriesAnalysis {
                 closest = dist;
                 output = d;
             }
-            else if ((dist < closest) && (d > 0)){
+            else if ((dist < closest) && (d > 0)) {
                 closest = dist;
                 output = d;
             }
@@ -66,7 +66,7 @@ public class TemperatureSeriesAnalysis {
         double sumSquaredDifferences = 0.0;
 
         for (double temp : temperatureSeries) {
-            sumSquaredDifferences += Math.pow(temp - mean, 2);
+            sumSquaredDifferences += (temp - mean) * (temp - mean);
         }
         return Math.sqrt(sumSquaredDifferences / temperatureSeries.length);
     }
@@ -75,7 +75,7 @@ public class TemperatureSeriesAnalysis {
         error();
         double minimum = temperatureSeries[0];
         for (double d : temperatureSeries) {
-            if (d < minimum){
+            if (d < minimum) {
                 minimum = d;
             }
         }
@@ -86,7 +86,7 @@ public class TemperatureSeriesAnalysis {
         error();
         double maximum = temperatureSeries[0];
         for (double d : temperatureSeries) {
-            if (d > maximum){
+            if (d > maximum) {
                 maximum = d;
             }
         }
@@ -176,13 +176,17 @@ public class TemperatureSeriesAnalysis {
     }
 
     public int addTemps(double... temps) {
-        while (temperatureSeries.length < (temperatureSeries.length + temps.length)) {
-            double[] newtemperatureSeries = new double[Math.max(1, 2 * temperatureSeries.length)];
-            System.arraycopy(temperatureSeries, 0, newtemperatureSeries, 0, temperatureSeries.length);
+        while (temperatureSeries.length < 
+        (temperatureSeries.length + temps.length)) {
+            double[] newtemperatureSeries = 
+            new double[Math.max(1, 2 * temperatureSeries.length)];
+            System.arraycopy(temperatureSeries, 0, 
+            newtemperatureSeries, 0, temperatureSeries.length);
             temperatureSeries = newtemperatureSeries;
         }
     
-        System.arraycopy(temps, 0, temperatureSeries, temperatureSeries.length - temps.length, temps.length);
+        System.arraycopy(temps, 0, 
+        temperatureSeries, temperatureSeries.length - temps.length, temps.length);
         return temperatureSeries.length;
     }
 }
