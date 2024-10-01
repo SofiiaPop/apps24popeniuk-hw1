@@ -13,6 +13,10 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
+        if (temperatureSeries == null) {
+            throw new IllegalArgumentException();
+        }
+
         for (double temp : temperatureSeries) {
             if (temp < NUM) {
                 throw new InputMismatchException();
