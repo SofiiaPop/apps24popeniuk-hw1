@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class TemperatureSeriesAnalysis {
-    private final static double NUM = -273.0;
+    private static final double NUM = -273.0;
     private double[] temperatureSeries;
 
     public TemperatureSeriesAnalysis() {
@@ -176,8 +176,8 @@ public class TemperatureSeriesAnalysis {
     }
 
     public int addTemps(double... temps) {
-        while (temperatureSeries.length < 
-        (temperatureSeries.length + temps.length)) {
+        while (temperatureSeries.length 
+        < (temperatureSeries.length + temps.length)) {
             double[] newtemperatureSeries = 
             new double[Math.max(1, 2 * temperatureSeries.length)];
             System.arraycopy(temperatureSeries, 0, 
@@ -186,7 +186,8 @@ public class TemperatureSeriesAnalysis {
         }
     
         System.arraycopy(temps, 0, 
-        temperatureSeries, temperatureSeries.length - temps.length, temps.length);
+        temperatureSeries, temperatureSeries.length - temps.length, 
+        temps.length);
         return temperatureSeries.length;
     }
 }
