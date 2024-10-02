@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 public class TemperatureSeriesAnalysis {
-    private double[] temperatureSeries;
     private static final double NUM = -273.0;
+    private double[] temperatureSeries;
 
     public TemperatureSeriesAnalysis() {
         this.temperatureSeries = new double[0];
