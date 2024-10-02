@@ -17,6 +17,8 @@ public class TemperatureSeriesAnalysis {
             throw new IllegalArgumentException();
         }
 
+        this.temperatureSeries = new double[0];
+
         for (double temp : temperatureSeries) {
             if (temp < NUM) {
                 throw new InputMismatchException();
